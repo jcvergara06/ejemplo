@@ -30,7 +30,7 @@ public interface TareaRepository extends JpaRepository<TareaEntity, Long> {
 	 * @return
 	 */
 	@Modifying
-    @Query(value = "SELECT * FROM TAREA", nativeQuery = true)
+    @Query(value = "SELECT * FROM tarea", nativeQuery = true)
 	List <TareaEntity> obtieneDatos();
 	
 	/**
@@ -42,7 +42,7 @@ public interface TareaRepository extends JpaRepository<TareaEntity, Long> {
 	 */
     @Modifying
     @Transactional
-    @Query(value = "UPDATE TAREA SET DESCRIPCION = :desc, FECHA_CREACION = :fecha, VIGENTE = :vigente WHERE IDENTIFICADOR = :id", nativeQuery = true)
+    @Query(value = "UPDATE tarea SET DESCRIPCION = :desc, FECHA_CREACION = :fecha, VIGENTE = :vigente WHERE IDENTIFICADOR = :id", nativeQuery = true)
     void update(@Param("desc") String descripcion, @Param("fecha") Date fecha, @Param("vigente") Boolean vigente, @Param("id") int id);
 
     /**
@@ -51,6 +51,6 @@ public interface TareaRepository extends JpaRepository<TareaEntity, Long> {
      */
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM TAREA WHERE IDENTIFICADOR = :id", nativeQuery = true)
+    @Query(value = "DELETE FROM tarea WHERE IDENTIFICADOR = :id", nativeQuery = true)
     void eliminar(@Param("id") String id);
 }

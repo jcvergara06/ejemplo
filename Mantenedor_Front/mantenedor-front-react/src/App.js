@@ -62,43 +62,54 @@ const validaFecha=(param)=>{
     }
 
     peticionPostInsertar=async()=>{
-      const body = {
+      
+      try {
+        const body = {
           "identificador": '',
           "descripcion": this.state.form.descripcion,
           "fechaCreacion": getCurrentDate(),
           "vigente": this.state.form.vigente
-      }
+          
+         }
 
-      if(null == this.state.form.descripcion || this.state.form.descripcion == "" || null == this.state.form.vigente || this.state.form.vigente == ""){
+        if(null == this.state.form.descripcion || this.state.form.descripcion == "" || null == this.state.form.vigente || this.state.form.vigente == ""){
+          this.setState({modalError: true});
+        }else{
+          await axios.post(urlInsertar, body).then(response=>{
+            this.modalInsertar();
+            this.peticionGetObtieneDatos();
+          }).catch(error=>{
+            console.log(error.message);
+          })
+        }
+      } catch (error) {
         this.setState({modalError: true});
-      }else{
-        await axios.post(urlInsertar, body).then(response=>{
-          this.modalInsertar();
-          this.peticionGetObtieneDatos();
-        }).catch(error=>{
-          console.log(error.message);
-        })
       }
     }
 
     peticionPostActualizar=async()=>{
-      const body = {
-          "identificador": this.state.form.identificador,
-          "descripcion": this.state.form.descripcion,
-          "fechaCreacion": getCurrentDate(),
-          "vigente": this.state.form.vigente
-      }
 
-      if(null == this.state.form.descripcion || this.state.form.descripcion == "" || null == this.state.form.vigente || this.state.form.vigente == ""){
-        this.setState({modalError: true});
-      }else{
-        await axios.post(urlActualizar, body).then(response=>{
-          this.modalInsertar();
-          this.peticionGetObtieneDatos();
-        }).catch(error=>{
-          console.log(error.message);
-        })
-      }
+      try {
+          const body = {
+              "identificador": this.state.form.identificador,
+              "descripcion": this.state.form.descripcion,
+              "fechaCreacion": getCurrentDate(),
+              "vigente": this.state.form.vigente
+          }
+
+          if(null == this.state.form.descripcion || this.state.form.descripcion == "" || null == this.state.form.vigente || this.state.form.vigente == ""){
+            this.setState({modalError: true});
+          }else{
+            await axios.post(urlActualizar, body).then(response=>{
+              this.modalInsertar();
+              this.peticionGetObtieneDatos();
+            }).catch(error=>{
+              console.log(error.message);
+            })
+          }
+        } catch (error) {
+          this.setState({modalError: true});
+        }
     }
 
     seleccionarTarea=(tarea)=>{
