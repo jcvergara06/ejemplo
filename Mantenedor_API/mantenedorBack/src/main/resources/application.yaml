@@ -1,6 +1,0 @@
-info:
-  component: api-mantenedor
-  version: 1.0.0
-
-server:
-  port: 8081
